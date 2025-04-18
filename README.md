@@ -88,8 +88,4 @@ Our goal was to analyze patterns in consumer behavior and determine which featur
 - **Class weighting** was crucial for both datasets to avoid majority-class bias
 - **SVM with RBF kernel** provided best results across both tasks
 
----
-
-## 📎 Links
-- 📊 [Shopper Dataset on Kaggle](https://www.kaggle.com/datasets/imakash3011/online-shoppers-purchasing-intention-dataset)
-- 📊 [Churn Dataset on Kaggle](https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset)
+- [Full Analysis Can Be Viewed Here](https://github.com/Tyler-Johnston/Customer-Behavior-Analysis/blob/main/Project%207%20-%20Logistic%20Regression%20and%20SVMs.pdf)
