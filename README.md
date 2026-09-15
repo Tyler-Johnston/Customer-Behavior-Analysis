@@ -1,90 +1,72 @@
-# Customer Behavior Analysis via Logistic Regression and SVMs
+# Customer Behavior Analysis
 
-## Overview
+A reproducible comparison of Logistic Regression and Support Vector Machine (SVM) classifiers for two imbalanced binary-classification problems:
 
-In this project, we used Logistic Regression and Support Vector Machines (SVMs) to model two binary classification problems:
+- **Online shoppers:** predict whether a browsing session ends in a purchase.
+- **Bank churn:** predict whether a customer leaves the bank.
 
-1. Online Shopper Purchase Intent
-2. Bank Customer Churn
+The project is deliberately structured so that the notebook, CSV metrics, figures, and PDF report all use the same implementation and cannot drift apart.
 
-The goal was to analyze patterns in consumer behavior and determine which features were most useful in predicting purchase decisions and customer churn. We evaluated multiple kernel types for the SVMs and used class balancing techniques to improve model accuracy.
+## Key findings
 
----
+Model selection is based on three-fold stratified cross-validation on the training data. Final test values below come from a separate, untouched 25% holdout set.
 
-## Datasets
+| Dataset | CV-selected model | Test F1, positive class | Test average precision | Test ROC-AUC |
+| --- | --- | ---: | ---: | ---: |
+| Online shoppers | RBF SVM | 0.634 | 0.630 | 0.894 |
+| Bank churn | RBF SVM | 0.599 | 0.676 | 0.859 |
 
-### Online Shopper Purchase Intent
+For online shoppers, the linear SVM had the strongest ROC-AUC (0.902), while the RBF SVM had the best cross-validated positive-class F1. For bank churn, polynomial and RBF SVMs substantially outperformed the linear models on the positive class; their held-out F1 scores were 0.603 and 0.599 respectively. The RBF model remains the selected model because it had the strongest cross-validated positive-class F1, rather than because it happened to win a single test split.
 
-- [Source](https://www.kaggle.com/datasets/imakash3011/online-shoppers-purchasing-intention-dataset)
-- Target variable: `Revenue` (True/False)
-- Features include:
-  - Bounce rate, exit rate, page value
-  - Month, visitor type, weekend
-  - Product interactions (e.g., informational and product-related page visits)
+These are useful benchmark models, not production-ready decision systems. The positive classes are uncommon--15.5% purchases and 20.4% churn--so accuracy is intentionally not used as the main success measure.
 
-### Bank Customer Churn
+## Repository guide
 
-- [Source](https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset)
-- Target variable: `Churn` (1 = leaving, 0 = staying)
-- Features include:
-  - Age, balance, credit score, country
-  - Active member status, gender
+| Path | Purpose |
+| --- | --- |
+| `src/analysis.py` | Canonical analysis: loading, preprocessing, model comparison, evaluation, charts, and PDF generation. |
+| `assignment7.ipynb` | Minimal notebook entry point that runs the canonical analysis. |
+| `online_shoppers_intention.csv` | Online-shopping session data; target column: `Revenue`. |
+| `Bank Customer Churn Prediction.csv` | Bank customer data; target column: `churn`. |
+| `results/` | Generated metric tables and machine-readable run summary. |
+| `figures/` | Generated model comparisons, confusion matrices, and decision slices. |
+| `Project 7 - Logistic Regression and SVMs.pdf` | Generated visual report based on the same run. |
 
----
+## Run the analysis
 
-## Methods and Techniques
+Requires Python 3. The pinned dependency versions are in `requirements.txt`.
 
-- Logistic Regression
-- Support Vector Machines (linear, polynomial, and RBF kernels)
-- Correlation analysis
-- Feature selection
-- One-hot encoding and data normalization
-- Class weight balancing to address class imbalance
+```bash
+python -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python src/analysis.py
+```
 
----
+This regenerates `results/`, `figures/`, and the PDF report. To run it interactively, open `assignment7.ipynb` from the repository root and execute its single code cell.
 
-## Results Summary
+## Methodology
 
-### Shopper Purchase Intent
+1. Split each dataset into 75% training and 25% test data with stratification and `random_state=42`.
+2. Fit preprocessing only within training folds by using scikit-learn pipelines.
+3. Standardize continuous columns and one-hot encode categorical columns. In the shopping data, browser, region, operating-system, and traffic-source integer codes are treated as nominal categories rather than ordered values. `customer_id` is excluded from the churn model.
+4. Compare balanced Logistic Regression, linear SVM, degree-three polynomial SVM, and RBF SVM classifiers. `class_weight="balanced"` is the shared, reproducible imbalance baseline.
+5. Select the leading model with three-fold stratified cross-validation on a 1,000-row stratified training sample, then evaluate every model once on the untouched test set.
 
-| Model | Features | F1 Score (Class 0 / Class 1) |
-|-------|----------|------------------------------|
-| Logistic Regression | PageValues vs. ExitRates | 0.63 / 0.94 |
-| SVM (Linear) | PageValues vs. BounceRates | 0.65 / 0.93 |
-| SVM (RBF) | PageValues vs. ExitRates | 0.66 / 0.93 |
+The generated metric tables report cross-validation F1 (including its standard deviation), held-out positive-class F1, average precision, and ROC-AUC. Positive-class F1 measures the balance of precision and recall for purchase/churn; average precision summarizes the precision-recall curve; ROC-AUC summarizes ranking ability across thresholds.
 
-The RBF SVM performed best overall, and class weight tuning significantly improved prediction of the purchasing class.
+## Reading the figures
 
----
+- **Model comparison:** test positive-class F1 and average precision side by side. Use this to compare practical minority-class performance.
+- **Confusion matrix:** counts of correct and incorrect predictions on the held-out test split.
+- **Decision slice:** a two-dimensional view of the selected model. It is not a fabricated random-data chart: all features outside the displayed pair are fixed to their training median or mode, and the black contour is the model decision threshold.
 
-### Bank Customer Churn
+## Data notes and limitations
 
-| Model | Features | F1 Score (Churn / No Churn) |
-|-------|----------|------------------------------|
-| Logistic Regression | Age + Balance | 0.49 / 0.83 |
-| SVM (Linear) | Age + Balance | 0.50 / 0.83 |
-| SVM (Polynomial) | Age + Balance | 0.52 / 0.82 |
-| SVM (RBF) | Age + Balance | 0.55 / 0.87 |
+- The shopper dataset contains 125 exact duplicate rows. They are retained and reported to preserve the supplied dataset; assess them against the source before production use.
+- This project is a model comparison, not causal analysis. Feature effects in a decision slice must not be interpreted as causal effects.
+- The 1,000-row CV sample keeps the workflow quick to rerun. For a higher-stakes model, expand validation, tune hyperparameters using nested cross-validation, assess calibration and subgroup performance, and define a business-specific decision threshold.
 
-RBF again showed the strongest performance, with clear decision boundaries forming in feature space using age versus balance. Without class weighting, models were heavily biased toward the majority class (no churn).
+## Data sources
 
----
-
-## Tools Used
-
-- Python
-- scikit-learn
-- pandas
-- NumPy
-- matplotlib
-
----
-
-## Key Takeaways
-
-- Page value, bounce rate, and exit rate were the strongest predictors of purchase intent.
-- Age and balance produced clear decision boundaries for bank churn.
-- Class weighting was essential for both datasets to avoid majority-class bias.
-- SVM with an RBF kernel gave the best results across both tasks.
-
-[Full Analysis](https://github.com/Tyler-Johnston/Customer-Behavior-Analysis/blob/main/Project%207%20-%20Logistic%20Regression%20and%20SVMs.pdf)
+- [Online Shoppers Purchasing Intention](https://www.kaggle.com/datasets/imakash3011/online-shoppers-purchasing-intention-dataset)
+- [Bank Customer Churn](https://www.kaggle.com/datasets/gauravtopre/bank-customer-churn-dataset)
