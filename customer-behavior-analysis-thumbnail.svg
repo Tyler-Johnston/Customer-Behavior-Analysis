@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="820" viewBox="0 0 1600 820" role="img" aria-labelledby="title desc">
+  <title id="title">Customer Behavior Analysis</title>
+  <desc id="desc">Editorial chart thumbnail comparing four classifiers on bank-churn test average precision: Logistic Regression 0.48, Linear SVM 0.47, Polynomial SVM 0.70, RBF SVM 0.68 (selected model).</desc>
+  <defs>
+    <pattern id="paperGrid" width="34" height="34" patternUnits="userSpaceOnUse">
+      <path d="M34 0H0V34" fill="none" stroke="#2A2438" stroke-opacity="0.07" stroke-width="1"/>
+    </pattern>
+    <filter id="softShadow" x="-20%" y="-30%" width="140%" height="170%">
+      <feDropShadow dx="0" dy="12" stdDeviation="12" flood-color="#241F33" flood-opacity="0.16"/>
+    </filter>
+  </defs>
+
+  <rect width="1600" height="820" fill="#EFEBF5"/>
+  <rect width="1600" height="820" fill="url(#paperGrid)"/>
+  <rect x="0" y="0" width="30" height="820" fill="#5B3E8E"/>
+
+  <!-- Title block -->
+  <text x="94" y="136" fill="#241F33" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="700" letter-spacing="-2">Customer Behavior</text>
+  <text x="94" y="205" fill="#241F33" font-family="Georgia, 'Times New Roman', serif" font-size="72" font-weight="700" letter-spacing="-2">Analysis</text>
+  <path d="M97 239H610" stroke="#5B3E8E" stroke-width="5"/>
+  <text x="96" y="281" fill="#5B5570" font-family="Arial, sans-serif" font-size="22" font-weight="700" letter-spacing="0.7">BANK CHURN &#183; AVERAGE PRECISION BY MODEL</text>
+
+  <!-- Axis: average precision, 0 to .75 -->
+  <text x="480" y="365" fill="#5B5570" font-family="Arial, sans-serif" font-size="19" font-weight="700" letter-spacing="0.7">AVG PREC.</text>
+  <line x1="622" y1="390" x2="622" y2="665" stroke="#241F33" stroke-width="3"/>
+  <line x1="622" y1="390" x2="1522" y2="390" stroke="#241F33" stroke-opacity="0.20" stroke-width="2"/>
+  <line x1="622" y1="481.7" x2="1522" y2="481.7" stroke="#241F33" stroke-opacity="0.16" stroke-width="2"/>
+  <line x1="622" y1="573.3" x2="1522" y2="573.3" stroke="#241F33" stroke-opacity="0.16" stroke-width="2"/>
+  <line x1="622" y1="665" x2="1522" y2="665" stroke="#241F33" stroke-width="3"/>
+  <text x="612" y="397" fill="#5B5570" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="end">.75</text>
+  <text x="612" y="489" fill="#5B5570" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="end">.50</text>
+  <text x="612" y="580" fill="#5B5570" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="end">.25</text>
+  <text x="612" y="672" fill="#5B5570" font-family="Arial, sans-serif" font-size="19" font-weight="700" text-anchor="end">0</text>
+
+  <!-- Four candidate models; polynomial and RBF SVM pull ahead of the linear baselines -->
+  <g filter="url(#softShadow)">
+    <rect x="650" y="489.0" width="170" height="176.0" fill="#B7AFC9"/>
+    <rect x="884" y="492.7" width="170" height="172.3" fill="#B7AFC9"/>
+    <rect x="1118" y="408.3" width="170" height="256.7" fill="#7A5CB0"/>
+    <rect x="1352" y="415.7" width="170" height="249.3" fill="#472F73"/>
+  </g>
+  <text x="735" y="465" fill="#241F33" font-family="Arial, sans-serif" font-size="42" font-weight="800" text-anchor="middle">0.48</text>
+  <text x="969" y="469" fill="#241F33" font-family="Arial, sans-serif" font-size="42" font-weight="800" text-anchor="middle">0.47</text>
+  <text x="1203" y="380" fill="#241F33" font-family="Arial, sans-serif" font-size="56" font-weight="800" text-anchor="middle">0.70</text>
+  <text x="1437" y="390" fill="#241F33" font-family="Arial, sans-serif" font-size="50" font-weight="800" text-anchor="middle">0.68</text>
+
+  <!-- Model labels -->
+  <text x="650" y="705" fill="#241F33" font-family="Arial, sans-serif" font-size="20" font-weight="700">LOGISTIC</text>
+  <text x="650" y="734" fill="#241F33" font-family="Arial, sans-serif" font-size="20" font-weight="700">REGRESSION</text>
+
+  <text x="884" y="705" fill="#241F33" font-family="Arial, sans-serif" font-size="20" font-weight="700">LINEAR</text>
+  <text x="884" y="734" fill="#241F33" font-family="Arial, sans-serif" font-size="20" font-weight="700">SVM</text>
+
+  <text x="1118" y="705" fill="#241F33" font-family="Arial, sans-serif" font-size="20" font-weight="700">POLYNOMIAL</text>
+  <text x="1118" y="734" fill="#241F33" font-family="Arial, sans-serif" font-size="20" font-weight="700">SVM</text>
+
+  <text x="1352" y="705" fill="#241F33" font-family="Arial, sans-serif" font-size="20" font-weight="700">RBF SVM</text>
+
+  <text x="1072" y="775" fill="#5B5570" font-family="Arial, sans-serif" font-size="20" font-weight="700" letter-spacing="0.7" text-anchor="middle">TEST AVERAGE PRECISION &#183; HELD-OUT SPLIT</text>
+
+</svg>
