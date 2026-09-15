@@ -36,8 +36,8 @@
   <g filter="url(#softShadow)">
     <rect x="650" y="489.0" width="170" height="176.0" fill="#B7AFC9"/>
     <rect x="884" y="492.7" width="170" height="172.3" fill="#B7AFC9"/>
-    <rect x="1118" y="408.3" width="170" height="256.7" fill="#7A5CB0"/>
-    <rect x="1352" y="415.7" width="170" height="249.3" fill="#472F73"/>
+    <rect x="1118" y="408.3" width="170" height="256.7" fill="#5B3E8E"/>
+    <rect x="1352" y="415.7" width="170" height="249.3" fill="#5B3E8E"/>
   </g>
   <text x="735" y="465" fill="#241F33" font-family="Arial, sans-serif" font-size="42" font-weight="800" text-anchor="middle">0.48</text>
   <text x="969" y="469" fill="#241F33" font-family="Arial, sans-serif" font-size="42" font-weight="800" text-anchor="middle">0.47</text>
