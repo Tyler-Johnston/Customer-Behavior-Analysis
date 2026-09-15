@@ -60,7 +60,7 @@ def decision_slice(model, X_train, X_test, y_test, x_name, y_name, title, output
         mask = y_test.to_numpy() == value
         ax.scatter(X_test.loc[mask, x_name], X_test.loc[mask, y_name], label=label, marker=marker, color=color, alpha=.42, s=20, edgecolors="none")
     fig.colorbar(filled, ax=ax, label="Model decision score")
-    ax.set(title=title, xlabel=x_name, ylabel=y_name); ax.legend(title="Observed target")
+    ax.set(title=title, xlabel=x_name, ylabel=y_name, xlim=(xv.min(), xv.max()), ylim=(yv.min(), yv.max())); ax.legend(title="Observed target")
     ax.text(.01, .01, "Other features fixed at training median/mode; black line = threshold.", transform=ax.transAxes, fontsize=8, bbox={"facecolor":"white", "alpha":.85, "edgecolor":"none"})
     fig.savefig(output, dpi=180, bbox_inches="tight"); plt.close(fig)
 
